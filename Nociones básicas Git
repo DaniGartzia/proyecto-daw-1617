@@ -1,0 +1,142 @@
+NOCIONES BASICAS GIT
+
+CONTROL DE VERSIONES
+
+Si eres diseñador gráfico o web, y quieres mantener cada versión de una imagen o diseño (algo que sin duda quieres), un sistema de control de versiones (Version Control System o VCS en inglés) es 
+
+una elección muy sabia. Te permite revertir archivos a un estado anterior, revertir el proyecto entero a un estado anterior, comparar cambios a lo largo del tiempo, ver quién modificó por 
+
+última vez algo que puede estar causando un problema, quién introdujo un error y cuándo, y mucho más. Usar un VCS también significa generalmente que si fastidias o pierdes archivos, puedes recuperarlos fácilmente. Además, obtienes todos estos beneficios a 
+
+un coste muy bajo 
+
+Un método de control de versiones usado por mucha gente es copiar los archivos a otro directorio (quizás indicando la fecha y hora 
+
+en que lo hicieron) Una de las herramientas de control de versiones más popular fue un sistema llamado rcs, que todavía podemos encontrar en muchos de 
+
+los ordenadores actuales. Hasta el famoso sistema operativo Mac OS X incluye el comando rcs cuando instalas las herramientas de desarrollo. Esta herramienta funciona básicamente guardando 
+
+conjuntos de parches (es decir, las diferencias entre archivos) de una versión a otra en un formato especial en disco; puede entonces recrear cómo era un archivo en cualquier momento sumando los 
+
+distintos parches.
+
+El siguiente gran problema que se encuentra la gente es que necesitan colaborar con desarrolladores en otros sistemas. Para solventar este problema, se desarrollaron los sistemas de control 
+
+de versiones centralizados (Centralized Version Control Systems o CVCSs en inglés). Estos sistemas, como CVS, Subversion, y Perforce, tienen un único servidor que contiene todos los archivos 
+
+versionados, y varios clientes que descargan los archivos desde ese lugar central. Durante muchos años éste ha sido el estándar para el control de versiones.
+
+Sin embargo, esta configuración también tiene serias desventajas. La más obvia es el punto único de fallo que representa el servidor centralizado. Si ese servidor se cae durante una hora, entonces durante esa hora nadie puede colaborar o guardar cambios 
+
+versionados de aquello en que están trabajando. Si el disco duro en el que se encuentra la base de datos central se corrompe, y no se han llevado copias de seguridad adecuadamente, pierdes 
+
+absolutamente todo —toda la historia del proyecto salvo aquellas instantáneas que la gente pueda tener en sus máquinas locales. Los VCSs locales sufren de este mismo problema— cuando tienes toda la 
+
+historia del proyecto en un único lugar, te arriesgas a perderlo todo.
+
+Es aquí donde entran los sistemas de control de versiones distribuidos (Distributed Version Control Systems o DVCSs en inglés). En un DVCS (como Git, Mercurial, Bazaar o Darcs), los 
+
+clientes no sólo descargan la última instantánea de los archivos: replican completamente el repositorio. Así, si un servidor muere, y estos sistemas estaban colaborando a través de él, cualquiera de 
+
+los repositorios de los clientes puede copiarse en el servidor para restaurarlo. Cada vez que se descarga una instantánea, en realidad se hace una copia de seguridad completa de todos los 
+
+datos.
+
+Es más, muchos de estos sistemas se las arreglan bastante bien teniendo varios repositorios con los que trabajar, por lo que puedes colaborar con distintos grupos de gente simultáneamente 
+
+dentro del mismo proyecto. Esto te permite establecer varios flujos de trabajo que no son posibles en sistemas centralizados, como pueden ser los modelos jerárquicos.
+
+ GIT es el software que rastrea. El sistema de control de versiones. La herramienta que utilizaremos en la terminal.
+ 
+Es un software rastreador. Le da seguimiento a todos los cambios que se ejecutan sobre un archivo o carpeta. Cada cambio que hagas en un directorio, GIT se da cuenta y lo registra
+
+GitHub es la plataforma de "hosting" de los proyectos. Una comunidad llena de personas que desarrollan y comparten, usando GIT. 
+
+Se complementan, pero son personajes independientes.
+
+---------------------------
+
+¿Qué es un fork?
+
+La palabra fork se traduce al castellano, dentro del contexto que nos ocupa, como bifurcación. Cuando hacemos un fork de un repositorio, se hace una copia exacta en crudo (en inglés “bare”) 
+
+del repositorio original que podemos utilizar como un repositorio git cualquiera. Después de hacer fork tendremos dos repositorios git idénticos pero con distinta URL. Justo después de hacer el 
+
+fork, estos dos repositorios tienen exactamente la misma historia, son una copia idéntica. Finalizado el proceso, tendremos dos repositorios independientes que pueden cada uno evolucionar de 
+
+forma totalmente autónoma. De hecho, los cambios que se hacen el repositorio original NO se transmiten automáticamente a la copia (fork). Esto tampoco ocurre a la inversa: las modificaciones que 
+
+se hagan en la copia (fork) NO se transmiten automáticamente al repositorio original.
+
+¿Y en qué se diferencia un fork de un clone?
+
+Cuando hacemos un clon de un repositorio, te bajas una copia del mismo a tu máquina. Empiezas a trabajar, haces modificaciones y haces un push. Cuando haces el push estás modificando el 
+
+repositorio que has clonado.
+
+Cuando haces un fork de un repositorio, se crea un nuevo repositorio en tu cuenta de Github o Bitbucket, con una URL diferente (fork). Acto seguido tienes que hacer un clon de esa 
+
+copia sobre la que empiezas a trabajar de forma que cuando haces push, estás modificando TU COPIA (fork). El repositorio original sigue intacto.
+
+Tiene varios usos. El más común es el de permitir a los desarrolladores contribuir a un proyecto de forma segura.
+
+------------------------------------
+
+¿Qué es un pull request?
+
+Un pull request es una petición que el propietario de un fork de un repositorio hace al propietario del repositorio original para que este último incorpore los commits que están en el fork.
+
+-------------------------------------
+
+¿Qué es una branch?
+
+Dentro de nuestro sistema de control de versiones podemos ver el histórico de cambios como si de un árbol se tratase. De esta forma podemos ir abriendo ramas que parten bien de la rama principal 
+
+(master) o de otra rama (branch).
+
+La principal utilidad que tienen los branch es la de organizar nuestro tabajao, por ejemplo:
+
+ - para desarrollar una nueva funcionalidad sin afectar al master mientras lo hacemos.
+ 
+ - para hacer un hotfix en una versión que ya ha salido a producción.
+ 
+ - para hacer un branch de producción, otro de pre, otro de testing, … y así ir promoviendo los cambios de uno a otro.
+ 
+ - para gestionar distintas versiones de un mismo producto: podríamos tener un branch por cada cliente donde está instalado el producto (la verdad es que esto no lo recomiendo porque en cuento 
+
+tengas más de un cliente la gestión se vuelve un infierno, es mejor tener un proyecto único y módulos de personalización; aquí lo comento simplemente porque he visto a gente trabajar así en la 
+
+oscuridad cerca de la puerta de Tannhäuser).
+    …
+
+Uno de los usos más comunes, por lo menos para mi, es el de desarrollar las nuevas funcionalidades dentro de un branch, en lugar de hacerlo directamente en el master. La principal ventaja 
+
+que tiene esto para mi es que mantengo el master “limpio” lo que permite hacer pull en cualquier momento y se que nunca voy a tener conflictos. Una vez hecho el pull puedo inspeccionar los 
+
+cambios que han hecho mis compañeros y hacer merge si lo creo oportuno.
+
+En cada confirmación de cambios (commit), Git almacena un punto de control que conserva: un apuntador a la copia puntual de los contenidos preparados (staged), unos metadatos con el autor y el 
+
+mensaje explicativo, y uno o varios apuntadores a las confirmaciones (commit) que sean padres directos de esta (un padre en los casos de confirmación normal, y múltiples padres en los 
+
+casos de estar confirmando una fusión (merge) de dos o mas ramas).
+
+---------------------------------
+
+Guardando cambios en el repositorio
+
+Tienes un repositorio Git completo, y una copia de trabajo de los archivos de ese proyecto. Necesitas hacer algunos cambios, y confirmar instantáneas de esos cambios a tu repositorio cada vez 
+
+que el proyecto alcance un estado que desees grabar.
+
+Recuerda que cada archivo de tu directorio de trabajo puede estar en uno de estos dos estados: bajo seguimiento (tracked), o sin seguimiento (untracked). Los archivos bajo seguimiento son 
+
+aquellos que existían en la última instantánea; pueden estar sin modificaciones, modificados, o preparados. Los archivos sin seguimiento son todos los demás —cualquier archivo de tu 
+
+directorio que no estuviese en tu última instantánea ni está en tu área de preparación—. La primera vez que clonas un repositorio, todos tus archivos estarán bajo seguimiento y sin modificaciones, 
+
+ya que los acabas de copiar y no has modificado nada.
+
+A medida que editas archivos, Git los ve como modificados, porque los has cambiado desde tu última confirmación. Preparas estos archivos modificados y luego confirmas todos los cambios que hayas 
+
+preparado, y el ciclo se repite.
